@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 675f14c83c105264599985bf7b07a313, type: 3}
+  m_Name: BuffEffectTable
+  m_EditorClassIdentifier: 
+  buffShowEffectList:
+  - Type: 0
+    sprites:
+    - {fileID: -912177142, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: 1060317279, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: -996327173, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: -1868332331, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: 541396454, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: -621545863, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    - {fileID: -1673851115, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    triggerFrame: {fileID: -1868332331, guid: 58f05b83717c221429bdcb82b862862c, type: 3}
+    material: {fileID: 2100000, guid: 8b3b664bb54b7154e9936f5b1dd5c901, type: 2}
+    IsLoopPlay: 0
+  - Type: 1
+    sprites:
+    - {fileID: -1898016767, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    - {fileID: -726030321, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    - {fileID: 1992298737, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    - {fileID: 1810398908, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    - {fileID: -725613148, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    - {fileID: -1530449441, guid: ac639679be51a7a4b9b2fdd9da520111, type: 3}
+    triggerFrame: {fileID: 0}
+    material: {fileID: 2100000, guid: 5f2a22d963877654186363e379abc66c, type: 2}
+    IsLoopPlay: 1

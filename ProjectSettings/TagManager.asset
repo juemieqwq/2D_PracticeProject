@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - UI
+  - CharacterController
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Ground
+  - BackGround
+  - Enemy
+  - Skill
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 3466235881
+    locked: 0
+  - name: Ground
+    uniqueID: 1963770725
+    locked: 0
+  - name: UI
+    uniqueID: 4092422689
+    locked: 0
+  - name: Skill
+    uniqueID: 1726597117
+    locked: 0
+  - name: 'Character '
+    uniqueID: 3245182987
+    locked: 0
+  - name: Buff
+    uniqueID: 2669198899
+    locked: 0
