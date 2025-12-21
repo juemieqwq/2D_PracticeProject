@@ -11,7 +11,7 @@ using UnityEngine.Windows;
 
 //}
 
-public class BaseEnemy : MonoBehaviour
+public class BaseEnemy : MonoBehaviour, IRole
 {
 
 
@@ -286,5 +286,10 @@ public class BaseEnemy : MonoBehaviour
     public virtual void Dead()
     {
 
+    }
+
+    public GameObject GetGameObject()
+    {
+        return this.gameObject;
     }
 }

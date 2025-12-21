@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class BaseCharacter : MonoBehaviour, StateMachineHost
+public class BaseCharacter : MonoBehaviour, StateMachineHost, IRole
 {
     //角色动画
     public Animator anim { get; protected set; }
@@ -16,5 +16,8 @@ public class BaseCharacter : MonoBehaviour, StateMachineHost
     //角色的朝向
     public float direction { get; protected set; }
 
-
+    public GameObject GetGameObject()
+    {
+        return this.gameObject;
+    }
 }

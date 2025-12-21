@@ -17,6 +17,13 @@ public interface IRoleInfo
     public ArmorType GetArmorType();
 }
 
+public interface IRole
+{
+    public GameObject GetGameObject();
+
+}
+
+
 public class RoleStateMachine
 {
     //当前状态对应Key
@@ -31,8 +38,9 @@ public class RoleStateMachine
     //角色动画播放器
     public RoleAnimator roleAnimator { get; private set; }
 
-    //宿主
-    private IRoleInfo host;
+    //宿主信息
+    public IRole host { get; private set; }
+    public IRoleInfo hostInfo { get; private set; }
     //所有的状态字典集合（Dictionary<TKey, TValue>，跟哈希表类型）
     //作用类似对象池，缓存所有已经用过的对象，减少每次切换时进行新的new操作
     private Dictionary<string, RoleBaseState> _stateDic = new Dictionary<string, RoleBaseState>();
@@ -40,28 +48,28 @@ public class RoleStateMachine
 
 
     //其他类创建状态机时进行初始化
-    public RoleStateMachine(IRoleInfo host, RoleAnimator roleAnimator, RoleBaseState state, string key)
+    public RoleStateMachine(IRole host, RoleAnimator roleAnimator, RoleBaseState roleState, string key)
     {
         this.host = host;
-        this.currentRoleState = state;
-        this.initRoleState = state;
-        this.currentStateKey = key;
-        this.initRoleStatekey = key;
+        this.hostInfo = host.GetGameObject().GetComponent<IRoleInfo>();
         this.roleAnimator = roleAnimator;
-
+        roleState.Init(this, host, hostInfo, key);
+        this.currentRoleState = roleState;
+        this.currentStateKey = key;
+        currentRoleState.Enter();
     }
 
-    public bool ChangeState<T>(string key, bool reCurrentState = false) where T : RoleBaseState, new()
+    public bool ChangeState<T>(string key) where T : RoleBaseState, new()
     {
         //状态一致且不需要刷新状态
-        if (currentStateKey == key && reCurrentState) return false;
+        if (currentStateKey == key) return false;
         //退出当前状态
         if (currentRoleState != null)
         {
             currentRoleState.Exit();
         }
         //进入新状态
-        if (GetState<T>(key).GetIsEnter())
+        if (true)
         {
             ////切换状态时将动画完成变为false
             //if (currentRoleState != null && currentRoleState.IsFinish)
@@ -103,7 +111,7 @@ public class RoleStateMachine
             return stateObj;
         }
         RoleBaseState state = new T();
-        state.Init(this, host, key);
+        state.Init(this, host, hostInfo, key);
         _stateDic.Add(key, state);
         return state;
     }
@@ -125,5 +133,11 @@ public class RoleStateMachine
     {
         if (this.currentRoleState != null)
             currentRoleState.Update();
+    }
+
+    public void FixedUpdate()
+    {
+        if (this.currentRoleState != null)
+            currentRoleState.FixedUpdate();
     }
 }

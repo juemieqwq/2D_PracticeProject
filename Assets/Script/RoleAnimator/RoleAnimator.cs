@@ -51,8 +51,6 @@ public class RoleAnimator : MonoBehaviour
         if (containers != null)
         {
             Init();
-            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Idle, 1), true);
-            Debug.Log("初始化状态为：" + currentPlayBehavior);
         }
         else
             Debug.Log("获取的容器为空");
@@ -80,7 +78,7 @@ public class RoleAnimator : MonoBehaviour
         }
     }
 
-    public string RoleBehaviorNameAndNumToString(RoleBehavior BehaviorName, int BehaviorSerialNumber)
+    public static string BehaviorNameAndNumToString(RoleBehavior BehaviorName, int BehaviorSerialNumber = 1)
     {
         return String.Concat(BehaviorName, BehaviorSerialNumber);
     }
@@ -160,12 +158,12 @@ public class RoleAnimator : MonoBehaviour
         if (Input.GetKeyDown("p"))
         {
 
-            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Idle, 1), true);
+            PlayRoleBehavior(BehaviorNameAndNumToString(RoleBehavior.Idle, 1), true);
         }
         else if (Input.GetKeyDown("o"))
         {
 
-            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Run, 1), false);
+            PlayRoleBehavior(BehaviorNameAndNumToString(RoleBehavior.Run, 1), false);
         }
         if (Input.GetKeyDown("s"))
         {

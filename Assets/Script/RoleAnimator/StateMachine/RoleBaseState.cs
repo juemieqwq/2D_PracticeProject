@@ -5,32 +5,38 @@ using UnityEngine;
 public class RoleBaseState
 {
     protected RoleStateMachine hostStateMachine;
-    protected RoleAnimator roleAnimator;
+    protected RoleAnimator hostAnimator;
+    protected IRole host;
+    protected IRoleInfo hostInfo;
+    protected Rigidbody2D hostRigidbody2D;
 
     protected bool isInit = false;
 
-    //是否成功进入状态
-    protected bool isEnter = true;
 
     //动画播放完成
     public bool isFinish { get; private set; } = false;
     protected bool isLoop = true;
-
     public string key;
 
 
-
-    public virtual void Init(RoleStateMachine statemachine, IRoleInfo roleInfo, string key)
+    public void BindStatemachine(RoleStateMachine statemachine, IRole role, IRoleInfo roleInfo)
     {
         hostStateMachine = statemachine;
-        roleAnimator = hostStateMachine.roleAnimator;
-        isEnter = true;
-        isInit = true;
-        this.key = key;
+        hostInfo = roleInfo;
+        host = role;
     }
 
 
-
+    public virtual void Init(RoleStateMachine statemachine, IRole role, IRoleInfo roleInfo, string key)
+    {
+        hostStateMachine = statemachine;
+        hostAnimator = hostStateMachine.roleAnimator;
+        host = role;
+        hostInfo = roleInfo;
+        hostRigidbody2D = role.GetGameObject().GetComponent<Rigidbody2D>();
+        isInit = true;
+        this.key = key;
+    }
 
     public virtual void Enter()
     {
@@ -40,26 +46,24 @@ public class RoleBaseState
             return;
         }
         hostStateMachine.currentRoleState = this;
-        roleAnimator.PlayRoleBehavior(key, isLoop);
-        roleAnimator.isFinshedPlay = false;
+        hostAnimator.PlayRoleBehavior(key, isLoop);
+        hostAnimator.isFinshedPlay = false;
+
     }
 
     public virtual void Update()
     {
 
     }
+
+    public virtual void FixedUpdate()
+    {
+
+    }
     public virtual void Exit()
     {
-        roleAnimator.isFinshedPlay = true;
-    }
-    public bool GetIsEnter()
-    {
-        return isEnter;
-    }
-
-    public void InitIsEnter()
-    {
-        isEnter = true;
+        if (hostAnimator != null)
+            hostAnimator.isFinshedPlay = true;
     }
 
 
