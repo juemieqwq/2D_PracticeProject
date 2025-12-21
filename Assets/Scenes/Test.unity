@@ -1431,7 +1431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75218cab984cf884cb98f20257b569b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playFrame: 0
+  playFrame: 9
   containers:
   - {fileID: 450709222}
   - {fileID: 770268806}

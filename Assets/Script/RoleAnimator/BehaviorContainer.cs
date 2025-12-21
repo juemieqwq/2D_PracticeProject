@@ -18,9 +18,10 @@ public class BehaviorContainer : MonoBehaviour
         Fire
     }
 
-    public RoleBehavior roleBehaviorName;
-    public int roleBehaviorSerialNumber = 1;
-    [HideInInspector]
+    [SerializeField]
+    private RoleBehavior roleBehaviorName;
+    [SerializeField]
+    private int roleBehaviorSerialNumber = 1;
     private List<GameObject> PlayGameObjects;
 
     public List<GameObject> GetPlayGameObjects()
@@ -40,4 +41,13 @@ public class BehaviorContainer : MonoBehaviour
         return PlayGameObjects;
     }
 
+    public RoleBehavior GetRoleBehaviorName()
+    {
+        return roleBehaviorName;
+    }
+
+    public int GetRoleBehaviorSerialNumber()
+    {
+        return roleBehaviorSerialNumber;
+    }
 }

@@ -6,41 +6,19 @@ using UnityEngine;
 using static CharacterMultiplierTable;
 
 
-public interface IPlayerInfo
+public interface IPlayerInfo : IRoleInfo
 {
 
-    public float GetInfo(GetInfoType getInfoType);
+
     public void SetSpeedAndForceJump(float Speed, float ForceJump);
     public void ResetSpeedAndForceJump();
-    public void Hit(float damage, DamageTimeType damageType);
 
-    public DamageTimeType GetDamageTimeType();
-
-    public DamageType GetDamageType();
-
-    public DamageElementType GetDamageElementType();
-
-    public CharacterType GetCharacterType();
-    public ArmorType GetArmorType();
 }
 
-public interface IEnemyInfo
+public interface IEnemyInfo : IRoleInfo
 {
-    public float GetInfo(GetInfoType getInfoType);
-
     public void SetSpeed(float Speed);
     public void ResetSpeed();
-    public void Hit(float damage, DamageTimeType damageType);
-
-    public DamageTimeType GetDamageTimeType();
-
-    public DamageType GetDamageType();
-
-    public DamageElementType GetDamageElementType();
-
-    public CharacterType GetCharacterType();
-
-    public ArmorType GetArmorType();
 }
 
 public interface ISkillInfo

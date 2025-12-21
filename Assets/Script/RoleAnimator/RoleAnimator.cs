@@ -9,12 +9,16 @@ public class RoleAnimator : MonoBehaviour
 {
     [Header("一秒播放多少帧，应用与本角色的所有动画播放")]
     public int playFrame;
-    public List<GameObject> containers = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> containers = new List<GameObject>();
     public Dictionary<string, List<GameObject>> DicPlayImagesGameObjects;
     public List<GameObject> currentPlayBehavior;
     private bool isInit = false;
     private Coroutine currentCoroutine;
-    private bool isFinshedPlay = false;
+    [HideInInspector]
+    public bool isFinshedPlay = false;
+    //是否停止播放
+    private bool isPausePlay = false;
     public void Init()
     {
         DicPlayImagesGameObjects = new Dictionary<string, List<GameObject>>();
@@ -30,7 +34,7 @@ public class RoleAnimator : MonoBehaviour
             List<GameObject> PlayImagesGameObjects = new List<GameObject>();
             PlayImagesGameObjects = ContanierClass.GetPlayGameObjects();
             Contanier.gameObject.SetActive(true);
-            var KeyName = ContanierClass.roleBehaviorName.ToString();
+            var KeyName = String.Concat(ContanierClass.GetRoleBehaviorName(), ContanierClass.GetRoleBehaviorSerialNumber());
             if (!DicPlayImagesGameObjects.ContainsKey(KeyName))
             {
                 DicPlayImagesGameObjects.Add(KeyName, PlayImagesGameObjects);
@@ -47,35 +51,38 @@ public class RoleAnimator : MonoBehaviour
         if (containers != null)
         {
             Init();
-            PlayRoleBehavior(RoleBehavior.Idle, true);
+            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Idle, 1), true);
             Debug.Log("初始化状态为：" + currentPlayBehavior);
         }
         else
             Debug.Log("获取的容器为空");
     }
 
-    public void PlayRoleBehavior(RoleBehavior BehaviorName, bool isLoop = true)
+    public void PlayRoleBehavior(string Key, bool isLoop = true)
     {
         //如果未成功初始化，在播放时再次尝试初始化
         if (!isInit)
             Init();
-
-        isFinshedPlay = true;
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         SetCurrentBehaviorAtive();
-        string Key = BehaviorName.ToString();
-        if (DicPlayImagesGameObjects.TryGetValue(Key, out currentPlayBehavior))
+
+        if (DicPlayImagesGameObjects.TryGetValue(Key, out var Behavior))
         {
+            currentPlayBehavior = Behavior;
             isFinshedPlay = false;
             currentCoroutine = StartCoroutine(Play(isLoop));
+            Debug.Log("当前播放协程：" + currentCoroutine);
         }
         else
         {
-            Debug.Log("CurrentPlayBehavior:" + currentPlayBehavior);
+            Debug.LogError("字典为查出key：" + Key + "的value值");
         }
+    }
 
-
+    public string RoleBehaviorNameAndNumToString(RoleBehavior BehaviorName, int BehaviorSerialNumber)
+    {
+        return String.Concat(BehaviorName, BehaviorSerialNumber);
     }
 
     private IEnumerator Play(bool isLoop = true)
@@ -87,7 +94,6 @@ public class RoleAnimator : MonoBehaviour
         // 先激活第一帧
         if (currentPlayBehavior != null && currentPlayBehavior.Count > 0)
         {
-            SetCurrentBehaviorAtive();
             currentPlayBehavior[0].SetActive(true);
         }
         else
@@ -97,6 +103,12 @@ public class RoleAnimator : MonoBehaviour
         }
         while (!isFinshedPlay)
         {
+            //是否暂停播放
+            if (isPausePlay)
+            {
+                yield return new WaitForFixedUpdate();
+                continue;
+            }
             time += Time.fixedDeltaTime;
             while (time >= everyFrame && !isFinshedPlay)
             {
@@ -130,6 +142,11 @@ public class RoleAnimator : MonoBehaviour
         }
     }
 
+    private void PausePlay(bool isPause)
+    {
+        this.isPausePlay = isPause;
+    }
+
     public void SetCurrentBehaviorAtive(bool isAtive = false)
     {
         foreach (var frame in currentPlayBehavior)
@@ -143,17 +160,16 @@ public class RoleAnimator : MonoBehaviour
         if (Input.GetKeyDown("p"))
         {
 
-            PlayRoleBehavior(RoleBehavior.Idle, true);
+            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Idle, 1), true);
         }
         else if (Input.GetKeyDown("o"))
         {
 
-            PlayRoleBehavior(RoleBehavior.Run, true);
+            PlayRoleBehavior(RoleBehaviorNameAndNumToString(RoleBehavior.Run, 1), false);
         }
         if (Input.GetKeyDown("s"))
         {
-            isFinshedPlay = true;
-            StopCoroutine(currentCoroutine);
+            PausePlay(!isPausePlay);
         }
     }
 }
