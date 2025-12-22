@@ -15,6 +15,12 @@ public class Player : BaseCharacter
     public PlayerAnimator _playerAnimator { get; private set; }
 
 
+    #region 新的动画播放器
+    private StateMachineBehaviour stateMachine;
+    private RoleBaseState currentState;
+    private RoleAnimator roleAnimator;
+    #endregion
+
     #region 射线检测
     [Header("角色射线检测")]
     //检测地板所在的图层

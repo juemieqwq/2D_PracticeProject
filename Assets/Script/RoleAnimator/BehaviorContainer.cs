@@ -15,7 +15,11 @@ public class BehaviorContainer : MonoBehaviour
         Hit,
         Dead,
         Aim,
-        Fire
+        Fire,
+        Dash,
+        WallSlide,
+        AttackCrash,
+        BackAttack
     }
 
     [SerializeField]

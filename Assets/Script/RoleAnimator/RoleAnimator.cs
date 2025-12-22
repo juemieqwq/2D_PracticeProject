@@ -9,9 +9,9 @@ public class RoleAnimator : MonoBehaviour
 {
     [Header("一秒播放多少帧，应用与本角色的所有动画播放")]
     public int playFrame;
-    [SerializeField]
-    private List<GameObject> containers = new List<GameObject>();
+    private List<GameObject> containers;
     public Dictionary<string, List<GameObject>> DicPlayImagesGameObjects;
+    [HideInInspector]
     public List<GameObject> currentPlayBehavior;
     private bool isInit = false;
     private Coroutine currentCoroutine;
@@ -22,7 +22,20 @@ public class RoleAnimator : MonoBehaviour
     public void Init()
     {
         DicPlayImagesGameObjects = new Dictionary<string, List<GameObject>>();
-        if (containers == null || containers.Count == 0)
+        if (containers == null)
+        {
+            containers = new List<GameObject>();
+            foreach (var container in GetComponentsInChildren<BehaviorContainer>())
+            {
+                if (!containers.Contains(container.gameObject))
+                {
+                    containers.Add(container.gameObject);
+                    Debug.Log("容器列表添加：" + container.gameObject);
+                }
+
+            }
+        }
+        if (containers.Count == 0)
         {
             isInit = false;
             Debug.LogError("容器存储列表为赋值,初始化失败");
@@ -46,14 +59,9 @@ public class RoleAnimator : MonoBehaviour
         isInit = true;
     }
 
-    public void Start()
+    public void Awake()
     {
-        if (containers != null)
-        {
-            Init();
-        }
-        else
-            Debug.Log("获取的容器为空");
+        Init();
     }
 
     public void PlayRoleBehavior(string Key, bool isLoop = true)
@@ -74,7 +82,7 @@ public class RoleAnimator : MonoBehaviour
         }
         else
         {
-            Debug.LogError("字典为查出key：" + Key + "的value值");
+            Debug.LogError("字典未查出key：" + Key + "的value值");
         }
     }
 
