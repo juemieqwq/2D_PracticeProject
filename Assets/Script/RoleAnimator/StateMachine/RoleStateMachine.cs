@@ -135,9 +135,7 @@ public class RoleStateMachine
         if (currentRoleState != null)
         {
             currentRoleState.Update();
-            Debug.LogError("当前状态：" + currentRoleState);
         }
-
         else
             Debug.LogError(string.Concat("角色：", host, "的当前状态为空，无法运行Update"));
     }

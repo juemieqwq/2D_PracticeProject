@@ -118,4 +118,6 @@ public class PlayerAnimator : MonoBehaviour
         _player._CurrentState.FinishAnimator(1);
 
     }
+
+
 }

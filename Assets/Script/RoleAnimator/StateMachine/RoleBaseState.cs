@@ -18,7 +18,16 @@ public class RoleBaseState
 
 
     //动画播放完成
-    public bool isFinish { get; private set; } = false;
+    public bool isFinish
+    {
+        get
+        {
+            if (hostAnimator != null)
+                return hostAnimator.isFinshedPlay;
+            else return false;
+        }
+        private set { hostAnimator.isFinshedPlay = value; }
+    }
     protected bool isLoop = true;
     public string key;
 
@@ -43,7 +52,8 @@ public class RoleBaseState
         }
         hostStateMachine.currentRoleState = this;
         hostAnimator.PlayRoleBehavior(key, isLoop);
-        hostAnimator.isFinshedPlay = false;
+        if (hostAnimator != null)
+            isFinish = false;
 
     }
 
@@ -65,7 +75,7 @@ public class RoleBaseState
     public virtual void Exit()
     {
         if (hostAnimator != null)
-            hostAnimator.isFinshedPlay = true;
+            isFinish = true;
     }
 
 

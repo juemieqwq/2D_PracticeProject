@@ -33,11 +33,9 @@ public class BehaviorContainer : MonoBehaviour
         if (PlayGameObjects == null)
         {
             PlayGameObjects = new List<GameObject>();
-            var Children = gameObject.GetComponentsInChildren<Transform>(true);
+            var Children = gameObject.GetComponentsInChildren<SpriteRenderer>(true);
             foreach (var Child in Children)
             {
-                if (Child == Children[0])
-                    continue;
                 Child.gameObject.SetActive(false);
                 PlayGameObjects.Add(Child.gameObject);
             }
@@ -53,5 +51,10 @@ public class BehaviorContainer : MonoBehaviour
     public int GetRoleBehaviorSerialNumber()
     {
         return roleBehaviorSerialNumber;
+    }
+
+    public string GetContainerKey()
+    {
+        return string.Concat(roleBehaviorName, roleBehaviorSerialNumber);
     }
 }

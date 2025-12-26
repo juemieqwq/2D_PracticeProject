@@ -33,6 +33,10 @@ public class EnemyInfo : MonoBehaviour, IEnemyInfo, IBuff
 
     [SerializeField]
     private ArmorType armorType;
+    [SerializeField]
+    [Header("受伤后的无敌时间")]
+    private float ineffectiveTime;
+    private float time;
     //宿主的类
     private BaseEnemy enemyClass;
 
@@ -76,12 +80,21 @@ public class EnemyInfo : MonoBehaviour, IEnemyInfo, IBuff
     }
     public void Hit(float damage, DamageTimeType damageTimeType)
     {
-        if (damage > defense)
+        bool isHit = false;
+        if (damage > defense && (damageTimeType == DamageTimeType.ReduceHealth || damageTimeType == DamageTimeType.Hit || damageTimeType == DamageTimeType.Dizziness))
         {
             health = health - (damage - defense);
             Debug.LogError("受到伤害：" + (damage - defense));
+            isHit = true;
         }
-        if (health > 0)
+        else if (damage > defense && (damageTimeType == DamageTimeType.IntervalHit || damageTimeType == DamageTimeType.IntervalDizziness) && time < 0)
+        {
+            health = health - (damage - defense);
+            time = ineffectiveTime;
+            Debug.LogError("间隔受到伤害：" + (damage - defense));
+            isHit = true;
+        }
+        if (health > 0 && isHit)
         {
             enemyClass.Hit(damageTimeType);
         }
@@ -127,7 +140,7 @@ public class EnemyInfo : MonoBehaviour, IEnemyInfo, IBuff
 
     void Update()
     {
-
+        time -= Time.deltaTime;
     }
     private void OnEnable()
     {

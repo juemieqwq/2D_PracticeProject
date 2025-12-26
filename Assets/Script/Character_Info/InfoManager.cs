@@ -116,6 +116,7 @@ public enum GetInfoType
 {
     ForceJump,
     Speed,
+    DashSpeed,
     MaxHealth,
     Health,
     Defense,

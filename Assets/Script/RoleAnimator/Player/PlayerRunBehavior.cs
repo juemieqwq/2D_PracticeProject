@@ -27,6 +27,10 @@ public class PlayerRunBehavior : RoleBaseState
             string key = RoleAnimator.BehaviorNameAndNumToString(BehaviorContainer.RoleBehavior.Idle, 1);
             hostStateMachine.ChangeState<PlayerIdleBehavior>(key);
         }
+        else if (!isOnGoround)
+        {
+            hostStateMachine.ChangeState<PlayerFallBehavior>("Fall1");
+        }
     }
 
     public override void FixedUpdate()

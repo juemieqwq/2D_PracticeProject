@@ -237,22 +237,21 @@ public class Player : BaseCharacter
 
 
         ////³å´Ì
-        //if (Input.GetKeyDown("left shift") && _playerManager.GetSkill<DashSkill>((int)SkillName.DashSkill).CanUseSkill())
-        //{
+        if (Input.GetKeyDown("left shift") && _playerManager.GetSkill<DashSkill>((int)SkillName.DashSkill).CanUseSkill())
+        {
 
-        //    _playerManager.UseSkill<DashSkill>((int)SkillName.DashSkill);
-        //    inputX = Input.GetAxisRaw("Horizontal");
-        //    _statemachine.ChangeState<PlayerDash>((int)PlayerState.Dash);
-        //    return;
-        //}
+            _playerManager.UseSkill<DashSkill>((int)SkillName.DashSkill);
+            stateMachine.ChangeState<PlayerDashBehavior>("Dash1");
+            return;
+        }
 
-        ////ÆÕÍ¨¹¥»÷
-        //if (isOnGround && Input.GetKeyDown("mouse 0"))
-        //{
+        //ÆÕÍ¨¹¥»÷
+        if (isOnGround && Input.GetKeyDown("mouse 0"))
+        {
 
-        //    _statemachine.ChangeState<PlayerAttack1_1>((int)PlayerState.Attack1_1);
-        //    return;
-        //}
+            stateMachine.ChangeState<PlayerAttackBehavior>("Attack1");
+            return;
+        }
 
 
         ////½øÈëÃé×¼×´Ì¬
@@ -311,5 +310,6 @@ public class Player : BaseCharacter
         _isDead = true;
         _statemachine.ChangeState<PlayerDead>((int)PlayerState.Dead);
     }
+
 
 }

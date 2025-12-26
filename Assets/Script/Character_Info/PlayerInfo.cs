@@ -8,6 +8,8 @@ public class PlayerInfo : MonoBehaviour, IPlayerInfo, IBuff
     private float speed;
     private float originalSpeed;
     [SerializeField]
+    private float dashSpeed;
+    [SerializeField]
     private float forceJump;
     private float originalForceJump;
     [SerializeField]
@@ -60,6 +62,8 @@ public class PlayerInfo : MonoBehaviour, IPlayerInfo, IBuff
                 return maxHealth;
             case GetInfoType.ScaleTime:
                 return scaleTime;
+            case GetInfoType.DashSpeed:
+                return dashSpeed;
         }
         Debug.LogError(this.name + "获取信息" + getInfoType + "错误");
         return 0;
