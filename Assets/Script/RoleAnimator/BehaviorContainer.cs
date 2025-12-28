@@ -26,6 +26,9 @@ public class BehaviorContainer : MonoBehaviour
     private RoleBehavior roleBehaviorName;
     [SerializeField]
     private int roleBehaviorSerialNumber = 1;
+    [Header("一秒播放多少帧")]
+    [SerializeField]
+    private int playFrame = 9;
     private List<GameObject> PlayGameObjects;
 
     public List<GameObject> GetPlayGameObjects()
@@ -56,5 +59,10 @@ public class BehaviorContainer : MonoBehaviour
     public string GetContainerKey()
     {
         return string.Concat(roleBehaviorName, roleBehaviorSerialNumber);
+    }
+
+    public int GetPlayFrame()
+    {
+        return playFrame;
     }
 }

@@ -46,6 +46,7 @@ public class PlayerAimState : StateBase
     public override void Update()
     {
 
+
         time += Time.deltaTime;
         base.Update();
         //角色跟随鼠标改变朝向

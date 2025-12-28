@@ -161,13 +161,13 @@ public class Player : BaseCharacter
         //获取过滤的List<Collider2D>列表
         //在通过foreach(Collider2D col in overlapResults)和col.GetComponent<标签类>()过滤标签；
         isOnGround = Physics2D.Raycast(rigidbody.position, Vector2.down, _groundCheckDistance, _WhatIsGround);
-        isInWall = Physics2D.Raycast(rigidbody.position, Vector2.right * direction, _wallCheckDistance, _WhatIsGround);
+        isTouchWall = Physics2D.Raycast(rigidbody.position, Vector2.right * direction, _wallCheckDistance, _WhatIsGround);
 
         //anim.SetBool("IsOnGround", isOnGround);
     }
 
     //绘制射线检测的线
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (rigidbody != null)
         {   //检测地面的线
@@ -189,6 +189,8 @@ public class Player : BaseCharacter
 
     private void ControlFilp()
     {
+        if (!isInput)
+            return;
         if (_isFlip)
         {
             Debug.Log("状态机进行了一次反转");
@@ -254,17 +256,18 @@ public class Player : BaseCharacter
         }
 
 
-        ////进入瞄准状态
-        //if (isOnGround && Input.GetKeyDown("mouse 1") && _playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
-        //{
-        //    _statemachine.ChangeState<PlayerAimState>((int)PlayerState.Aim);
-        //    return;
-        //}
-        //else if (isOnGround && Input.GetKeyDown("mouse 1") && !_playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
-        //{
-        //    _statemachine.ChangeState<PlayerBackSwordState>((int)PlayerState.BackSword);
-        //    return;
-        //}
+        //进入瞄准状态
+        if (isOnGround && Input.GetKeyDown("mouse 1") && _playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
+        {
+            stateMachine.ChangeState<PlayerAimBehaviour>("Aim1");
+
+            return;
+        }
+        else if (isOnGround && Input.GetKeyDown("mouse 1") && !_playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
+        {
+            //_statemachine.ChangeState<PlayerBackSwordState>((int)PlayerState.BackSword);
+            return;
+        }
 
         ////进入尝试反击状态
         //if (isOnGround && Input.GetKeyDown("left ctrl"))
@@ -300,7 +303,8 @@ public class Player : BaseCharacter
     public void Hit()
     {
         Debug.Log("玩家被击中");
-        _statemachine.ChangeState<PlayerHitState>((int)PlayerState.Hit);
+        stateMachine.ChangeState<PlayerHitBehavior>("Hit1");
+        //_statemachine.ChangeState<PlayerHitState>((int)PlayerState.Hit);
         StartCoroutine(DisableInputSecond(.2f));
     }
 
@@ -308,7 +312,8 @@ public class Player : BaseCharacter
     {
         isInput = false;
         _isDead = true;
-        _statemachine.ChangeState<PlayerDead>((int)PlayerState.Dead);
+        stateMachine.ChangeState<PlayerDeadBehavior>("Dead1");
+        //_statemachine.ChangeState<PlayerDead>((int)PlayerState.Dead);
     }
 
 

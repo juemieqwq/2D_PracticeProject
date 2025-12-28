@@ -13,6 +13,8 @@ public class RoleBaseState
     protected float inputX;
     protected float inputY;
 
+    protected bool isSetStopFrame;
+    protected int stopFrame;
 
     protected bool isInit = false;
 
@@ -50,6 +52,7 @@ public class RoleBaseState
             Debug.LogError("状态：" + this + "未进行初始化");
             return;
         }
+        isSetStopFrame = false;
         hostStateMachine.currentRoleState = this;
         hostAnimator.PlayRoleBehavior(key, isLoop);
         if (hostAnimator != null)
@@ -59,6 +62,8 @@ public class RoleBaseState
 
     public virtual void Update()
     {
+
+
         if (host.GetType() == typeof(Player))
         {
             var player = host as Player;
@@ -78,5 +83,20 @@ public class RoleBaseState
             isFinish = true;
     }
 
+    protected bool IsStopUpdate(int stopFrame)
+    {
+        if (!isSetStopFrame)
+        {
+            this.stopFrame = stopFrame;
+            isSetStopFrame = true;
+        }
 
+        if (this.stopFrame > 0)
+        {
+            this.stopFrame--;
+            return true;
+        }
+        else
+            return false;
+    }
 }

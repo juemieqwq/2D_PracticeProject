@@ -27,12 +27,12 @@ public class PlayerWallSlideState : StateBase
             _statemachine.ChangeState<PlayerGroundState>(-2);
             return;
         }
-        else if (!_player.isInWall)
+        else if (!_player.isTouchWall)
         {
             _statemachine.ChangeState<PlayerAirState>(-1);
             return;
         }
-        else if (_player.isInWall && Input.GetKeyDown("space"))
+        else if (_player.isTouchWall && Input.GetKeyDown("space"))
         {
             _statemachine.ChangeState<PlayerWallJump>((int)PlayerState.WallJump);
             return;

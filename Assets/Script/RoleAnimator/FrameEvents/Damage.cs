@@ -47,13 +47,16 @@ public class Damage : MonoBehaviour, IFrameEvent
             GetStartAndEndFrame();
     }
 
-    private void OnDrawGizmosSelected()
+
+    private void OnDrawGizmos()
     {
         if (attackCenter == null) return;
 
         Gizmos.color = new Color(1, 0, 0, 0.3f);
         Gizmos.DrawWireSphere(attackCenter.position, attackRadius);
     }
+
+
 
     private void Update()
     {

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFallBehavior : RoleBaseState
+public class PlayerFallBehavior : PlayerBaseState
 {
     public override void Enter()
     {
+        base.PlayerInit();
         base.Enter();
     }
 
@@ -22,10 +23,21 @@ public class PlayerFallBehavior : RoleBaseState
     public override void Update()
     {
         base.Update();
-        hostRigidbody2D.velocity = new Vector2(hostInfo.GetInfo(GetInfoType.Speed) * .5f * (host as Player).inputX, hostRigidbody2D.velocity.y);
-        if ((host as Player).isOnGround)
+        if (inputX != 0)
+            hostRigidbody2D.velocity = new Vector2(hostInfo.GetInfo(GetInfoType.Speed) * .5f * player.inputX, hostRigidbody2D.velocity.y);
+        else if (hostRigidbody2D.velocity.x > hostInfo.GetInfo(GetInfoType.Speed) * .5f)
+        {
+            hostRigidbody2D.velocity = new Vector2(hostInfo.GetInfo(GetInfoType.Speed) * .5f * player.direction, hostRigidbody2D.velocity.y);
+        }
+        if (player.isOnGround)
         {
             hostStateMachine.ChangeState<PlayerIdleBehavior>("Idle1");
+            return;
+        }
+        else if (player.isTouchWall)
+        {
+            hostStateMachine.ChangeState<PlayerWallSlideBehavior>("Fall2");
+            return;
         }
     }
 }

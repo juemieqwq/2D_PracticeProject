@@ -12,13 +12,15 @@ public interface IFrameEvent
 
 public class RoleAnimator : MonoBehaviour
 {
-    [Header("一秒播放多少帧，应用与本角色的所有动画播放")]
-    public int playFrame;
+
+    private int playFrame;
     private List<GameObject> containers;
     //播放图片对象字典
     public Dictionary<string, List<GameObject>> DicPlayImagesGameObjects;
     //播放容器中的帧方法
     public Dictionary<string, IFrameEvent[]> DicFrameEvents;
+    //每个状态的每秒帧率字典
+    public Dictionary<string, int> DicStatePlayFrame;
     [HideInInspector]
     public List<GameObject> currentPlayBehavior;
     private string currentKey;
@@ -34,15 +36,16 @@ public class RoleAnimator : MonoBehaviour
     {
         DicPlayImagesGameObjects = new Dictionary<string, List<GameObject>>();
         DicFrameEvents = new Dictionary<string, IFrameEvent[]>();
+        DicStatePlayFrame = new Dictionary<string, int>();
         if (containers == null)
         {
             containers = new List<GameObject>();
-            foreach (var container in GetComponentsInChildren<BehaviorContainer>())
+            foreach (var BehaviorContainerClass in GetComponentsInChildren<BehaviorContainer>())
             {
-                if (!containers.Contains(container.gameObject))
+                if (!containers.Contains(BehaviorContainerClass.gameObject))
                 {
-                    containers.Add(container.gameObject);
-                    Debug.Log("容器列表添加：" + container.gameObject);
+                    containers.Add(BehaviorContainerClass.gameObject);
+                    Debug.Log("容器列表添加：" + BehaviorContainerClass.gameObject);
                 }
             }
         }
@@ -80,6 +83,10 @@ public class RoleAnimator : MonoBehaviour
             }
             else
                 Debug.Log("字典已存在Key：" + KeyName);
+            if (!DicStatePlayFrame.ContainsKey(KeyName))
+            {
+                DicStatePlayFrame.Add(KeyName, ContanierClass.GetPlayFrame());
+            }
         }
         isInit = true;
     }
@@ -101,6 +108,7 @@ public class RoleAnimator : MonoBehaviour
         {
             currentKey = Key;
             currentPlayBehavior = Behavior;
+            playFrame = DicStatePlayFrame.GetValueOrDefault(Key);
             isFinshedPlay = false;
             if (DicFrameEvents.TryGetValue(Key, out var frameMethods))
             {
@@ -110,7 +118,6 @@ public class RoleAnimator : MonoBehaviour
                 }
             }
             currentCoroutine = StartCoroutine(Play(isLoop));
-            Debug.Log("当前播放协程：" + currentCoroutine);
         }
         else
         {
@@ -142,7 +149,7 @@ public class RoleAnimator : MonoBehaviour
     {
         float time = 0;
         float everyFrame = 0;
-        everyFrame = 1f / (float)this.playFrame;
+        everyFrame = 1f / (float)playFrame;
         int Index = 0;
         // 先激活第一帧
         if (currentPlayBehavior != null && currentPlayBehavior.Count > 0)

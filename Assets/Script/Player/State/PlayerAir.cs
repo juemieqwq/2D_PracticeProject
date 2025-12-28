@@ -47,7 +47,7 @@ public class PlayerAir : StateBase
         {
             _statemachine.ChangeState<PlayerGroundState>(-2);
         }
-        else if (_player.isInWall && !_player.isOnGround && _rigidbody.velocity.y <= 0)
+        else if (_player.isTouchWall && !_player.isOnGround && _rigidbody.velocity.y <= 0)
         {
             _statemachine.ChangeState<PlayerWallSlideState>((int)PlayerState.WallSlide);
         }

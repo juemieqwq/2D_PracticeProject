@@ -50,7 +50,7 @@ public class StateBaseEnemy
         _time = 0;
         SetIsFinish(false);
         _animator.SetBool(_animBoolName, true);
-        Debug.Log("动画从：" + _beforeAnim + "转变到：" + this);
+        //Debug.Log("动画从：" + _beforeAnim + "转变到：" + this);
         _host._CurrentState = this;
     }
 
@@ -63,7 +63,7 @@ public class StateBaseEnemy
     {
         _beforeAnim = this;
         _animator.SetBool(_animBoolName, false);
-        Debug.Log("动画从：" + this + "退出");
+        //Debug.Log("动画从：" + this + "退出");
     }
 
     public virtual bool IsEnter()
