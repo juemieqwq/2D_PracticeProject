@@ -7,7 +7,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class ThrowSwordSkill : BaseSkill
 {
 
-    public static int swordNum = 5;
+    public static int swordNum = 1;
     private Camera playerCamera;
     public SwordObject.SwordState swordState { private set; get; }
 

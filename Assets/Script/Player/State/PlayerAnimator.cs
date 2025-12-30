@@ -32,7 +32,8 @@ public class PlayerAnimator : MonoBehaviour
             _player._CurrentState.FinishAnimator(estimate);
     }
 
-    public void OnDrawGizmos()
+
+    public void OnDrawGizmosSelected()
     {
 
         if (_attackPosition != null)

@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleBehavior : PlayerBaseState
+public class PlayerHeavyAttackBehavior : PlayerBaseState
 {
     public override void Enter()
     {
-        base.Enter();
+        isLoop = false;
         base.PlayerInit();
+        base.Enter();
         hostRigidbody2D.velocity = Vector3.zero;
+        player.SetIsInput(false);
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.SetIsInput(true);
     }
 
     public override void FixedUpdate()
@@ -24,15 +27,9 @@ public class PlayerIdleBehavior : PlayerBaseState
     public override void Update()
     {
         base.Update();
-        if (player.inputX != 0 && isOnGoround)
+        if (isFinish)
         {
-            hostStateMachine.ChangeState<PlayerRunBehavior>(RoleAnimator.BehaviorNameAndNumToString(BehaviorContainer.RoleBehavior.Run));
+            hostStateMachine.ChangeState<PlayerIdleBehavior>("Idle1");
         }
-        else if (!player.isOnGround)
-        {
-            hostStateMachine.ChangeState<PlayerFallBehavior>("Fall1");
-        }
-
-
     }
 }

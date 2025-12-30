@@ -18,8 +18,9 @@ public class BehaviorContainer : MonoBehaviour
         Fire,
         Dash,
         WallSlide,
-        AttackCrash,
-        BackAttack
+        CrashAttack,
+        BackAttack,
+        Skill
     }
 
     [SerializeField]

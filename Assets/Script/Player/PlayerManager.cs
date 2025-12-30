@@ -19,6 +19,7 @@ using static SwordObject;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
+
     [SerializeField]
     public Player player;
     public enum SkillName
@@ -109,6 +110,10 @@ public class PlayerManager : MonoBehaviour
     public Cinemachine.NoiseSettings _noiseSettings;
     #endregion
 
+    private Coroutine shakeCoroutine;
+    private Coroutine viewZoomCoroutine;
+    private float originalCameraSize;
+    private Vector3 originalCameraOffset;
     private void Awake()
     {
         if (instance == null)
@@ -117,6 +122,8 @@ public class PlayerManager : MonoBehaviour
             {
                 player = GameObject.FindObjectOfType<Player>();
             }
+            originalCameraSize = _virtualCamera.m_Lens.OrthographicSize;
+            originalCameraOffset = _virtualCamera.GetCinemachineComponent<Cinemachine.CinemachineFramingTransposer>().m_TrackedObjectOffset;
             instance = this;
             DontDestroyOnLoad(gameObject);
             //当玩家数据为空时阻止游戏运行并且报错
@@ -137,19 +144,19 @@ public class PlayerManager : MonoBehaviour
     {
         SkillCoolDownTimeUpdate();
 
-        //切换飞剑模式
-        if (Input.GetKeyDown("t"))
-        {
-            if (swordState == SwordState.Catapult)
-                swordState = SwordState.Normal;
-            else if (swordState == SwordState.Normal)
-                swordState = SwordState.Penetrate;
-            else if (swordState == SwordState.Penetrate)
-                swordState = SwordState.Stop;
-            else if (swordState == SwordState.Stop)
-                swordState = SwordState.Catapult;
-            Debug.Log("SwordState:" + swordState);
-        }
+        ////切换飞剑模式
+        //if (Input.GetKeyDown("t"))
+        //{
+        //    if (swordState == SwordState.Catapult)
+        //        swordState = SwordState.Normal;
+        //    else if (swordState == SwordState.Normal)
+        //        swordState = SwordState.Penetrate;
+        //    else if (swordState == SwordState.Penetrate)
+        //        swordState = SwordState.Stop;
+        //    else if (swordState == SwordState.Stop)
+        //        swordState = SwordState.Catapult;
+        //    Debug.Log("SwordState:" + swordState);
+        //}
     }
 
     public T GetSkill<T>(int skillnum) where T : BaseSkill
@@ -232,15 +239,17 @@ public class PlayerManager : MonoBehaviour
     /// <param name="frequency">相机抖动的频率</param>
     public void ApplyCameraShake(float duration, float intensity, float frequency = 1)
     {
-        StopCoroutine(ShakeCoroutine(duration, intensity, frequency));
-        StartCoroutine(ShakeCoroutine(duration, intensity, frequency));
+        if (shakeCoroutine != null)
+            StopCoroutine(shakeCoroutine);
+        shakeCoroutine = StartCoroutine(ShakeCoroutine(duration, intensity, frequency));
     }
 
 
     public void ApplyCameraViewZoomAndOffset(float wait, float size, Vector3 offset)
     {
-        StopCoroutine(ViewZoomCoroutine(wait, size, offset));
-        StartCoroutine(ViewZoomCoroutine(wait, size, offset));
+        if (viewZoomCoroutine != null)
+            StopCoroutine(viewZoomCoroutine);
+        viewZoomCoroutine = StartCoroutine(ViewZoomCoroutine(wait, size, offset));
     }
 
 
@@ -279,10 +288,10 @@ public class PlayerManager : MonoBehaviour
         float everyWair = .1f;
         var num = wait / everyWair;
 
-        //存储原本的正交大小
-        var originalSize = _virtualCamera.m_Lens.OrthographicSize;
-        //储存原本的相机偏移量
-        var originalOffset = framingTransposer.m_TrackedObjectOffset;
+        ////存储原本的正交大小
+        //var originalSize = _virtualCamera.m_Lens.OrthographicSize;
+        ////储存原本的相机偏移量
+        //var originalOffset = framingTransposer.m_TrackedObjectOffset;
         //for (int i = 1; i < num + 1; i++)
         //{
         //    //修改正交大小，拉近相机距离
@@ -294,9 +303,8 @@ public class PlayerManager : MonoBehaviour
         _virtualCamera.m_Lens.OrthographicSize = size;
         framingTransposer.m_TrackedObjectOffset = offset;
         yield return new WaitForSeconds(wait);
-
-        _virtualCamera.m_Lens.OrthographicSize = originalSize;
-        framingTransposer.m_TrackedObjectOffset = originalOffset;
+        _virtualCamera.m_Lens.OrthographicSize = originalCameraSize;
+        framingTransposer.m_TrackedObjectOffset = originalCameraOffset;
 
 
     }

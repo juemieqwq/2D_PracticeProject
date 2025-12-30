@@ -64,6 +64,8 @@ public class FreezingTimeObject : MonoBehaviour
 
     private void OnDisable()
     {
+        if (SceneStateManager.IsApplicationQuitting)
+            return;
         foreach (var enemy in enemies)
         {
             enemy?.SetIsFreezingTime(false);

@@ -215,26 +215,26 @@ public class Player : BaseCharacter
             stateMachine.ChangeState<PlayerJumpBehavior>(RoleAnimator.BehaviorNameAndNumToString(BehaviorContainer.RoleBehavior.Jump));
 
         ////释放时间冻结
-        //if (Input.GetKeyDown("r") && _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).CanUseSkill())
-        //{
-        //    _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).UseSkill();
-        //}
-        ////进行时间冻结后的衔接攻击
-        //else if (isOnGround && Input.GetKeyDown("r") && FreezingTimeSkill.isCanCloneAttack)
-        //{
-        //    _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).SetisCloneAttack(true);
-        //    _statemachine.ChangeState<PlayerHeavyAttackState>((int)PlayerState.HeavyAttack);
-        //    return;
-        //}
+        if (Input.GetKeyDown("r") && _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).CanUseSkill())
+        {
+            _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).UseSkill();
+        }
+        //进行时间冻结后的衔接攻击
+        else if (isOnGround && Input.GetKeyDown("r") && FreezingTimeSkill.isCanCloneAttack)
+        {
+            _playerManager.GetSkill<FreezingTimeSkill>((int)PlayerManager.SkillName.FreezingTimeSkill).SetisCloneAttack(true);
+            stateMachine.ChangeState<PlayerHeavyAttackBehavior>(("Attack3"));
+            return;
+        }
         ////转移技能
-        //if (Input.GetKeyDown("f") && _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).CanUseSkill())
-        //{
-        //    _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).UseSkill();
-        //}
-        //else if (Input.GetKeyDown("f") && _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).objectIsActive)
-        //{
-        //    _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).SetObjectIsTransferPlayer(true);
-        //}
+        if (Input.GetKeyDown("f") && _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).CanUseSkill())
+        {
+            _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).UseSkill();
+        }
+        else if (Input.GetKeyDown("f") && _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).objectIsActive)
+        {
+            _playerManager.GetSkill<TransferSkill>((int)PlayerManager.SkillName.TransferSkill).SetObjectIsTransferPlayer(true);
+        }
 
 
 
@@ -260,21 +260,20 @@ public class Player : BaseCharacter
         if (isOnGround && Input.GetKeyDown("mouse 1") && _playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
         {
             stateMachine.ChangeState<PlayerAimBehaviour>("Aim1");
-
             return;
         }
         else if (isOnGround && Input.GetKeyDown("mouse 1") && !_playerManager.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).CanUseSkill())
         {
-            //_statemachine.ChangeState<PlayerBackSwordState>((int)PlayerState.BackSword);
+            stateMachine.ChangeState<PlayerBackSwordBehavior>("Aim2");
             return;
         }
 
         ////进入尝试反击状态
-        //if (isOnGround && Input.GetKeyDown("left ctrl"))
-        //{
-        //    _statemachine.ChangeState<PlayerCrashAttack>((int)PlayerState.CrashAttack);
-        //    return;
-        //}
+        if (isOnGround && Input.GetKeyDown("left ctrl"))
+        {
+            stateMachine.ChangeState<PlayerCrashAttackBehavior>("CrashAttack1");
+            return;
+        }
 
 
 

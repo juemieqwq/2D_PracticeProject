@@ -30,7 +30,9 @@ public class Damage : MonoBehaviour, IFrameEvent
     private GameObject endFrame;
     private bool endFrameIsAtive;
     private bool isDetection;
-    private float damage;
+    [Header("…À∫¶")]
+    [SerializeField]
+    private float damage = 0;
     private IRoleInfo host;
     private List<Collider2D> hitRoles;
 
@@ -39,8 +41,8 @@ public class Damage : MonoBehaviour, IFrameEvent
         host = GetComponentInParent<IRoleInfo>();
         if (hitRoles == null)
             hitRoles = new List<Collider2D>();
-
-        damage = host.GetInfo(GetInfoType.Damage);
+        if (damage == 0)
+            damage = host.GetInfo(GetInfoType.Damage);
         container = GetComponentInParent<BehaviorContainer>();
         roleAnimator = container.GetComponentInParent<RoleAnimator>();
         if (startFrame == null || (startFrame == null && endFrame == null))

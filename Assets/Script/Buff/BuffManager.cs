@@ -45,14 +45,14 @@ public class BuffManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("o"))
-        {
-            RuningBuff(PlayerManager.instance.player.GetComponent<IBuff>(), 3, .5f, BuffType.Slow, BuffEffectType.Freeze);
-        }
-        else if (Input.GetKeyDown("p"))
-        {
-            RuningBuff(test.GetComponent<IBuff>(), 3, 10, BuffType.DamageOverTime, BuffEffectType.Burn, DamageType.Elementaldamage, DamageElementType.Fire);
-        }
+        //if (Input.GetKeyDown("o"))
+        //{
+        //    RuningBuff(PlayerManager.instance.player.GetComponent<IBuff>(), 3, .5f, BuffType.Slow, BuffEffectType.Freeze);
+        //}
+        //else if (Input.GetKeyDown("p"))
+        //{
+        //    RuningBuff(test.GetComponent<IBuff>(), 3, 10, BuffType.DamageOverTime, BuffEffectType.Burn, DamageType.Elementaldamage, DamageElementType.Fire);
+        //}
     }
 
     #region ¹«¿ªº¯Êý

@@ -68,6 +68,7 @@ public class SwordObject : MonoBehaviour
     //弹射的目标
     private int _catapultTarget;
 
+    private Player player;
 
 
     void OnApplicationQuit()
@@ -121,6 +122,11 @@ public class SwordObject : MonoBehaviour
         // 存在时间
         _time += Time.deltaTime;
 
+        if (player != null && _time > .5f)
+        {
+            _isBePickUp = true;
+            ReleaseSword();
+        }
         //使剑不旋转的时候，剑头指向与运动方向一致
         if (!_isCrash && !_isBacking)
             _rigidbody2D.transform.right = _rigidbody2D.velocity;
@@ -190,6 +196,7 @@ public class SwordObject : MonoBehaviour
         //防止刚扔出去就被玩家捡起
         if (collision.GetComponent<Player>() != null && _time < .5f)
         {
+            player = collision.GetComponent<Player>();
             return;
         }
         //玩家捡起逻辑
@@ -239,6 +246,10 @@ public class SwordObject : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         stopEnemies.Remove(collision.gameObject);
+        if (collision.GetComponent<Player>() != null)
+        {
+            player = null;
+        }
     }
 
     private void DestroySword()
