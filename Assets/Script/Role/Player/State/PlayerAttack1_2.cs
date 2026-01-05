@@ -8,7 +8,7 @@ public class PlayerAttack1_2 : StateBase
     private float _inputX;
     public override void Enter()
     {
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         Change_Info("Attack1_2");
         base.Enter();
     }

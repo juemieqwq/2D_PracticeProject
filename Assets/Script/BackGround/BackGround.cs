@@ -18,7 +18,7 @@ public class BackGround : MonoBehaviour
     void Start()
     {
         if (_camera == null)
-            _camera = GameObject.Find("PlayerCamera");
+            _camera = GameObject.Find("Virtual Camera");
         _beginPosition = transform.position;
         _length = (int)GetComponentInChildren<SpriteRenderer>().bounds.size.x + 1;
         //Debug.Log("_length" + _length);

@@ -8,7 +8,7 @@ public class PlayerHitState : StateBase
     {
         _rigidbody.velocity = Vector2.zero;
         Change_Info("Hit");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         base.Enter();
     }
 

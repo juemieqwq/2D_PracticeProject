@@ -25,7 +25,7 @@ public class PlayerFallBehavior : PlayerBaseState
         base.Update();
         if (inputX != 0)
             hostRigidbody2D.velocity = new Vector2(hostInfo.GetInfo(GetInfoType.Speed) * .5f * player.inputX, hostRigidbody2D.velocity.y);
-        else if (hostRigidbody2D.velocity.x > hostInfo.GetInfo(GetInfoType.Speed) * .5f)
+        else if (hostRigidbody2D.velocity.x > hostInfo.GetInfo(GetInfoType.Speed) * .5f || hostRigidbody2D.velocity.x < -hostInfo.GetInfo(GetInfoType.Speed) * .5)
         {
             hostRigidbody2D.velocity = new Vector2(hostInfo.GetInfo(GetInfoType.Speed) * .5f * player.direction, hostRigidbody2D.velocity.y);
         }

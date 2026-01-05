@@ -7,7 +7,7 @@ public class PlayerIdle : StateBase
     public override void Enter()
     {
 
-        (_character as Player)._CurrentState = this;
+        //(_character as Player)._CurrentState = this;
         base.Change_Info("Idle");
         base.Enter();
     }

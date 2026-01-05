@@ -25,7 +25,7 @@ public class PlayerAimState : StateBase
         _player.SetIsInput(false);
         isThrowSword = false;
         Change_Info("Aim");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         time = 0;
         nowTimeScale = 0.25f;
         base.Enter();

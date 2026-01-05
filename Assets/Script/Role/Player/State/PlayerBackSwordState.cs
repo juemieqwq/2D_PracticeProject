@@ -16,7 +16,7 @@ public class PlayerBackSwordState : StateBase
         _playerManager.SetDotsActive(true);
         _rigidbody.velocity = Vector3.zero;
         _player.SetIsInput(false);
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         Change_Info("BackSword");
         base.Enter();
     }

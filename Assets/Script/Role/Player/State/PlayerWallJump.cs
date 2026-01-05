@@ -10,7 +10,7 @@ public class PlayerWallJump : StateBase
     {
         //JumpTime = 0.2f;
         Change_Info("WallJump");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         // Debug.Log("½ÇÉ«³ËµÄ×´Ì¬" + _player.direction);
         SetVelocity(Speed * _player.direction * -0.5f, ForceJump);
         // Debug.Log(_rigidbody.velocity);

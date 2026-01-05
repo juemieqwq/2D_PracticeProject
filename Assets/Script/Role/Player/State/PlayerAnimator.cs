@@ -28,8 +28,8 @@ public class PlayerAnimator : MonoBehaviour
     public void FinishAnimator(int estimate)
     {
         isFinish = true;
-        if (_player != null)
-            _player._CurrentState.FinishAnimator(estimate);
+        //if (_player != null)
+        //    _player._CurrentState.FinishAnimator(estimate);
     }
 
 
@@ -112,13 +112,13 @@ public class PlayerAnimator : MonoBehaviour
     //    StartCoroutine(WaitSecondFinshAnimator(second));
     //}
 
-    private IEnumerator WaitSecondFinshAnimator(float second)
-    {
-        _player._CurrentState.FinishAnimator(0);
-        yield return new WaitForSeconds(second);
-        _player._CurrentState.FinishAnimator(1);
+    //private IEnumerator WaitSecondFinshAnimator(float second)
+    //{
+    //    //_player._CurrentState.FinishAnimator(0);
+    //    //yield return new WaitForSeconds(second);
+    //    //_player._CurrentState.FinishAnimator(1);
 
-    }
+    //}
 
 
 }

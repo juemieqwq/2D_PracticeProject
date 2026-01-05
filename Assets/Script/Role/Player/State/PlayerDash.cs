@@ -17,7 +17,7 @@ public class PlayerDash : StateBase
         velocityY = -2;
         DashDir = _player.inputX;
         cTime = 0.2f;
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         Change_Info("Dash");
         _player.SetIsInput(false);
         base.Enter();

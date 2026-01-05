@@ -7,7 +7,7 @@ public class PlayerThrowSword : StateBase
     public override void Enter()
     {
         Change_Info("ThrowSword");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         base.Enter();
     }
 

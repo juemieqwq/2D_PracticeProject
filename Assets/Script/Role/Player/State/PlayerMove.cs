@@ -7,7 +7,7 @@ public class PlayerMove : StateBase
 {
     public override void Enter()
     {
-        (_character as Player)._CurrentState = this;
+        //(_character as Player)._CurrentState = this;
         base.Change_Info("Move");
         base.Enter();
     }

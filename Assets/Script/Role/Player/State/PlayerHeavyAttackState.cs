@@ -9,7 +9,7 @@ public class PlayerHeavyAttackState : StateBase
     {
         time = 0;
         Change_Info("HeavyAttack");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         _player.SetIsInput(false);
         base.Enter();
     }

@@ -19,7 +19,7 @@ public class PlayerCrashAttack : StateBase
             animator = _player._playerAnimator;
         _isCrashAttack = false;
         Change_Info("CrashAttack");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         _player.SetIsInput(false);
         if (animator != null)
             animator.StartCoroutine("WaitSecondFinshAnimator", .2f);

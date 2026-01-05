@@ -1,17 +1,16 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static PlayerManager;
 using UnityEngine.Assertions;
-using System;
+using UnityEngine.TextCore.Text;
+using static PlayerManager;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : BaseCharacter
 {
 
-    private StateMachine _statemachine;
-    public StateBase _CurrentState;
     //玩家动画事件类
     public PlayerAnimator _playerAnimator { get; private set; }
 
@@ -94,6 +93,7 @@ public class Player : BaseCharacter
     private Collider2D[] collider2Ds;
     private RaycastHit2D[] rayCastHit2Ds;
     #endregion
+
     void Start()
     {   //角色组件的初始化
         physicalDetection = GetComponent<PhysicalDetection>();
@@ -137,7 +137,7 @@ public class Player : BaseCharacter
         stateMachine.Update();
         ControlFilp();
         //Debug.Log("isOnGround:" + isOnGround);
-        Debug.Log("wall:" + isTouchWall);
+        //Debug.Log("wall:" + isTouchWall);
         //Debug.Log("CoolTime:" + _coolTime);
         this.velocity = rigidbody.velocity;
 
@@ -282,7 +282,6 @@ public class Player : BaseCharacter
         //普通攻击
         if (isOnGround && playerController.mouse0.isPressed)
         {
-
             stateMachine.ChangeState<PlayerAttackBehavior>("Attack1");
             return;
         }
@@ -335,7 +334,6 @@ public class Player : BaseCharacter
     {
         Debug.Log("玩家被击中");
         stateMachine.ChangeState<PlayerHitBehavior>("Hit1");
-        //_statemachine.ChangeState<PlayerHitState>((int)PlayerState.Hit);
         StartCoroutine(DisableInputSecond(.2f));
     }
 
@@ -344,7 +342,6 @@ public class Player : BaseCharacter
         isInput = false;
         _isDead = true;
         stateMachine.ChangeState<PlayerDeadBehavior>("Dead1");
-        //_statemachine.ChangeState<PlayerDead>((int)PlayerState.Dead);
     }
 
 

@@ -9,7 +9,7 @@ public class PlayerJump : PlayerAirState
     public override void Enter()
     {
         JumpTime = 0.2f;
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         // Change_Info("Jump");
         SetVelocity(this._rigidbody.velocity.x, ForceJump);
         base.Enter();

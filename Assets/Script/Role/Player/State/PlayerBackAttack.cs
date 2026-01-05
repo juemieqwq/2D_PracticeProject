@@ -11,7 +11,7 @@ public class PlayerBackAttack : StateBase
 
         _playerManager.ApplyCameraViewZoomAndOffset(.3f, 2, new Vector3(3, 0, 0));
         Change_Info("BackAttack");
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         base.Enter();
     }
 

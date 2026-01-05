@@ -18,7 +18,7 @@ public class PlayerAttack1_1 : StateBase
         DownMouse0Number = 0;
         SetVelocity(0, 0);
         _player.SetIsInput(false);
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         Change_Info("Attack1_1");
         base.Enter();
     }

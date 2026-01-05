@@ -9,7 +9,7 @@ public class PlayerWallSlideState : StateBase
     public override void Enter()
     {
         _downSpeed = -2;
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         Change_Info("WallSlide");
         base.Enter();
     }

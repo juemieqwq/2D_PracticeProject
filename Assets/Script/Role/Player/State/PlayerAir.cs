@@ -12,7 +12,7 @@ public class PlayerAir : StateBase
         if (_player.isOnGround)
         {
             JumpTime = 0.1f;
-            _player._CurrentState = this;
+            //_player._CurrentState = this;
             Change_Info("Air");
             SetVelocity(_rigidbody.velocity.x, ForceJump);
         }
@@ -21,7 +21,7 @@ public class PlayerAir : StateBase
             if (_rigidbody.velocity.x * _player.direction > _player._speed * _player.direction * 0.5f)
                 _rigidbody.velocity = new Vector2(_player._speed * _player.direction * .5f, _rigidbody.velocity.y);
             JumpTime = 0.1f;
-            _player._CurrentState = this;
+            //_player._CurrentState = this;
             Change_Info("Air");
         }
 

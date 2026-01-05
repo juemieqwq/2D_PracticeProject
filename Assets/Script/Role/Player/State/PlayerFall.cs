@@ -7,7 +7,7 @@ public class PlayerFall : PlayerAirState
 {
     public override void Enter()
     {
-        _player._CurrentState = this;
+        //_player._CurrentState = this;
         //  Change_Info("Fall");
         base.Enter();
     }
