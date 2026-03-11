@@ -301,7 +301,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -324,6 +324,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4b87432-b2ef-4ee5-8e95-c2b336b88400"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -417,17 +428,6 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""ffc6df99-f6d7-405d-92cc-ff36f8fc34d3"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Transfer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""1D Axis"",
                     ""id"": ""4ab478f0-d83c-474d-ba22-e1b0af74e70b"",
                     ""path"": ""1DAxis"",
@@ -490,6 +490,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DownPlatform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7bbad6e-15bb-4c10-b629-028623a05ac4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Transfer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }

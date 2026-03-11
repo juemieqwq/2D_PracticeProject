@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -29,6 +28,9 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
     [SerializeField]
     [Header("场景资源的SO")]
     private SceneAssetsReferenceSO sceneReferenceSO;
+    [SerializeField]
+    [Header("新场景加载事件")]
+    private VoidEventSO loadSceneSO;
     public AssetReference currentScene { private set; get; }
     public string currentSceneKey { private set; get; }
     private AssetReference goToScene;
@@ -43,8 +45,12 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
     private float fadeTime;
     //场景加载的协程引用
     private Coroutine loadSceneCoroutine;
+    [SerializeField]
     private Player player;
+    [SerializeField]
+    private Camera playerCamera;
 
+    public bool isFirstEnterCave = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -74,11 +80,11 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
 
     private void Start()
     {
-        player = PlayerManager.instance.player;
-        player.playerCamera.gameObject.SetActive(false);
         player.playerController.SetPlayerController(false);
         player.transform.position = menuPosition;
+        playerCamera.gameObject.SetActive(false);
         (this as ISaveableGameObject).RegisterSaveDate();
+        isFirstEnterCave = true;
     }
 
     private void OnDisable()
@@ -90,7 +96,13 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
 
     public void LoadNewGame()
     {
-        LoadNewScene("Cave", firstPosition);
+        Debug.LogError("角色死亡次数:" + player.deathNum);
+        if (player.deathNum == 1)
+        {
+            LoadNewScene("Forest", new Vector3(-28, -15, 0));
+        }
+        else
+            LoadNewScene("Cave", firstPosition);
     }
 
 
@@ -109,7 +121,6 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
         var waitFadeTime = new WaitForSeconds(fadeTime);
         if (isFade)
         {
-
             player.playerController.SetPlayerController(false);
             player.SetInputX(0);
             fadeClass.IsFadeIn(fadeTime, true);
@@ -129,17 +140,22 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
         PlayerManager.instance.player.transform.position = playerGoToPosition;
         loadSceneCoroutine = null;
         waitFadeTime = new WaitForSeconds(fadeTime * .5f);
+        //等待一帧让新场景的进入事件进行订阅
+        yield return null;
+        loadSceneSO.Raise();
         yield return waitFadeTime;
         if (isFade)
         {
             fadeClass.IsFadeIn(fadeTime, false);
             yield return waitFadeTime;
-            if (goToSceneKey == "Menu")
+            if (currentSceneKey == "Menu")
                 player.playerController.SetPlayerController(false);
-            else
+            else if (currentSceneKey != "Cave")
+                player.playerController.SetPlayerController(true);
+            else if (currentSceneKey == "Cave" && !isFirstEnterCave)
                 player.playerController.SetPlayerController(true);
         }
-
+        player.ResetPlayer();
     }
 
     public DataDefinition GetDateDefinition()

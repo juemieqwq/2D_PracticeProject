@@ -97,3 +97,5 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+# 忽略用户特定的编辑器设置（包括窗口布局）
+/[Uu]ser[Ss]ettings/

@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using static PlayerManager;
-using static UnityEditor.Experimental.GraphView.GraphView;
+
 
 public class Player : BaseCharacter, ISaveableGameObject
 {
@@ -24,7 +25,7 @@ public class Player : BaseCharacter, ISaveableGameObject
 
     #region 输入的相关变量
     //输入控制类
-    public PlayerController playerController { get; private set; }
+    public PlayerController playerController;
 
     //X轴输入信息
     public float inputX { get; private set; }
@@ -93,6 +94,8 @@ public class Player : BaseCharacter, ISaveableGameObject
     private Transform detectionGroundBack;
     [SerializeField]
     private Transform detectionWall;
+    [SerializeField]
+    private Transform detectionPlatform;
     private Collider2D[] collider2Ds;
     private RaycastHit2D[] rayCastHit2Ds;
     #endregion
@@ -105,6 +108,12 @@ public class Player : BaseCharacter, ISaveableGameObject
     private VoidEventSO loadGameEventSO;
     [SerializeField]
     private VoidEventSO newGameEventSO;
+
+    public int deathNum = 0;
+    private void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
     void Start()
     {   //角色组件的初始化
         physicalDetection = GetComponent<PhysicalDetection>();
@@ -112,8 +121,8 @@ public class Player : BaseCharacter, ISaveableGameObject
         anim = GetComponentInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         _playerInfo = GetComponent<PlayerInfo>();
-        playerCamera = transform.parent.GetComponentInChildren<Camera>();
-        playerController = GetComponent<PlayerController>();
+        if (playerCamera == null)
+            playerCamera = transform.parent.GetComponentInChildren<Camera>();
         Assert.IsNotNull(playerCamera, (this + "玩家相机为空"));
         Assert.IsNotNull(_playerInfo, (this + "玩家信息类为空"));
         //获取角色场景单例
@@ -124,7 +133,7 @@ public class Player : BaseCharacter, ISaveableGameObject
         //_statemachine.ChangeState<PlayerAir>((int)PlayerState.Air);
         //_CurrentState.Init(_statemachine, this, _playerManager);
         roleAnimator = GetComponentInChildren<RoleAnimator>();
-        //要自己new成初始状态，不然StateMachine内的当前为：RoleBaseState类
+        //要自己new成所需要的初始状态（如PlyaerIdle），不然StateMachine内的当前状态为：RoleBaseState类
         currentState = new PlayerIdleBehavior();
         stateMachine = new RoleStateMachine(this, roleAnimator, currentState, RoleAnimator.BehaviorNameAndNumToString(BehaviorContainer.RoleBehavior.Idle));
         //gameObject是实例（当前对象）
@@ -137,7 +146,6 @@ public class Player : BaseCharacter, ISaveableGameObject
         //添加事件监听
         newGameEventSO.AddEventListener(ResetPlayer);
         loadGameEventSO.AddEventListener(ResetPlayer);
-
     }
 
 
@@ -156,10 +164,6 @@ public class Player : BaseCharacter, ISaveableGameObject
         //Debug.Log("wall:" + isTouchWall);
         //Debug.Log("CoolTime:" + _coolTime);
         this.velocity = rigidbody.velocity;
-
-
-
-
     }
 
     private void FixedUpdate()
@@ -227,24 +231,15 @@ public class Player : BaseCharacter, ISaveableGameObject
             if (collider2Ds?.Length > 0)
                 isOnGround = true;
             else
-                isOnGround = false;
-
+            {
+                collider2Ds = physicalDetection.DicColliders.GetValueOrDefault(detectionPlatform);
+                if (collider2Ds?.Length > 0)
+                    isOnGround = true;
+                else
+                    isOnGround = false;
+            }
         }
     }
-
-    ////绘制射线检测的线
-    //private void OnDrawGizmosSelected()
-    //{
-    //    if (rigidbody != null)
-    //    {   //检测地面的线
-    //        Gizmos.color = Color.green;
-    //        Gizmos.DrawLine(rigidbody.transform.position, new Vector3(rigidbody.position.x, rigidbody.position.y - _groundCheckDistance, rigidbody.transform.position.z));
-    //        //检测墙体的线
-    //        Gizmos.color = Color.blue;
-    //        Gizmos.DrawLine(rigidbody.transform.position, new Vector3(rigidbody.position.x + _wallCheckDistance * direction, rigidbody.position.y, rigidbody.transform.position.z));
-
-    //    }
-    //}
 
     public void Filp()
     {
@@ -332,8 +327,8 @@ public class Player : BaseCharacter, ISaveableGameObject
             return;
         }
 
-        //////进入尝试反击状态
-        //if (isOnGround && Input.GetKeyDown("left ctrl"))
+        //进入尝试反击状态
+        //if (isOnGround && Keyboard.current.ctrlKey.wasPressedThisFrame)
         //{
         //    stateMachine.ChangeState<PlayerCrashAttackBehavior>("CrashAttack1");
         //    return;
@@ -372,10 +367,13 @@ public class Player : BaseCharacter, ISaveableGameObject
 
     public void Dead()
     {
+        if (_isDead)
+            return;
         isInput = false;
         _isDead = true;
-        gameOverEventSO?.Raise();
+        deathNum++;
         stateMachine.ChangeState<PlayerDeadBehavior>("Dead1");
+        gameOverEventSO?.Raise();
     }
 
     public void ResetPlayer()
@@ -386,7 +384,6 @@ public class Player : BaseCharacter, ISaveableGameObject
             _playerInfo.SetHealth(_playerInfo.GetInfo(GetInfoType.MaxHealth));
             _isDead = false;
         }
-
         stateMachine.ChangeState<PlayerIdleBehavior>("Idle1");
     }
 

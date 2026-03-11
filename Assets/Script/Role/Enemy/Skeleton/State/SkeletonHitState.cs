@@ -10,6 +10,7 @@ public class SkeletonHitState : StateBaseEnemy
         (_host as SkeletonEnemy).SetIsCheck(false);
         _host.SetIsCanBeBackAttack(false);
         _host.SetShowCanBeBackAttackTime(false);
+        (_host as SkeletonEnemy).StartRepelCoroutine(.2f);
         SetAnimBoolName("Hit");
         base.Enter();
     }

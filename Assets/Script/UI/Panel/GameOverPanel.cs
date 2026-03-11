@@ -33,17 +33,25 @@ public class GameOverPanel : MonoBehaviour
         showUI.SetActive(false);
     }
 
-    public void ShowPanpel() => showUI.SetActive(true);
+    public void ShowPanpel()
+    {
+        Time.timeScale = 0;
+        showUI.SetActive(true);
+    }
 
-    public void HidePanpel() => showUI.SetActive(false);
+    public void HidePanpel()
+    {
+        Time.timeScale = 1;
+        showUI.SetActive(false);
+    }
 
     public void LoadGame() => loadGameEventSO?.Raise();
     public void NewGame() => newGameEventSO?.Raise();
     public void BackMenuScene()
-    {//这边应该搞个场景加载事件SO搞的，偷懒这样写
+    {
+        //这边应该搞个场景加载事件SO搞的，偷懒这样写
         PlayerManager.instance.player.playerCamera.gameObject.SetActive(false);
         PlayerManager.instance.player.ResetPlayer();
-
         SceneLoadManager.instance.LoadNewScene("Menu", SceneLoadManager.instance.menuPosition);
     }
 

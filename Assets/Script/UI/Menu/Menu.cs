@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour
     [Header("¹ã²¥ÊÂ¼þ")]
     [SerializeField]
     private VoidEventSO loadGameEventSO;
+    [SerializeField]
+    private VoidEventSO newGameEventSO;
     private void Start()
     {
         EventSystem.current.firstSelectedGameObject = firstGameObject;
@@ -41,4 +43,10 @@ public class Menu : MonoBehaviour
     }
 
     public void BroadcastEvent() => loadGameEventSO?.Raise();
+
+    public void NewGame()
+    {
+        PlayerManager.instance.player.deathNum = 0;
+        newGameEventSO?.Raise();
+    }
 }

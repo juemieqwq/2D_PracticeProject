@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RadioManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class RadioManager : MonoBehaviour
     [SerializeField]
     private FloatEventSO setMasterVolumeSO;
 
+    [Header("ÒôÆµ»ìºÏÆ÷")]
     [SerializeField]
     private AudioMixer audioMixer;
 
@@ -50,6 +53,7 @@ public class RadioManager : MonoBehaviour
     private void Start()
     {
         setMasterVolumeSO.AddEventListener(SetMasterVolume);
+
     }
 
     private void OnDisable()
@@ -148,12 +152,13 @@ public class RadioManager : MonoBehaviour
 
     public void SetMasterVolume(float value)
     {
-        audioMixer.SetFloat("MasterVolume", value);
+        audioMixer?.SetFloat("MasterVolume", value);
     }
 
     public float GetMasterVolume()
     {
-        audioMixer.GetFloat("MasterVolume", out currentMasterVolume);
+        audioMixer?.GetFloat("MasterVolume", out currentMasterVolume);
         return currentMasterVolume;
     }
+
 }

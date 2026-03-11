@@ -67,8 +67,6 @@ public class SkeletonAlertState : StateBaseEnemy
             _animator.SetBool("Move", true);
             _animator.SetBool("Idle", false);
         }
-
-
         if ((_host._player.rigidbody.position.x - _rigidbody.position.x) > 0 && _host._direction == -1)
         {
             _host.Filp();

@@ -191,6 +191,8 @@ public class SwordObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.isTrigger)
+            return;
         if (collision.gameObject.GetComponent<BaseEnemy>() != null && _state == SwordState.Stop)
             stopEnemies.Add(collision.gameObject);
         //防止刚扔出去就被玩家捡起
@@ -241,6 +243,7 @@ public class SwordObject : MonoBehaviour
 
 
         _isCrash = true;
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -377,7 +380,7 @@ public class SwordObject : MonoBehaviour
     //剑处于一般状态时运行
     private void Normal(Collider2D collision)
     {
-        if (collision.transform.GetComponent<BaseEnemy>() != null)
+        if (collision.transform.GetComponent<BaseEnemy>() != null || collision.transform.gameObject.tag == "Platform")
             transform.parent = collision.transform;
         _animator.SetBool("Idle", true);
         _rigidbody2D.bodyType = RigidbodyType2D.Kinematic;

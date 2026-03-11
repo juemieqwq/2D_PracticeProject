@@ -9,6 +9,8 @@ TagManager:
   - CameraBound
   - CanInteraction
   - PlayerSpawn
+  - Sword
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - BackGround
   - Enemy
   - Skill
-  - 
+  - Platform
   - 
   - 
   - 

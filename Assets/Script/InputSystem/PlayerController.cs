@@ -77,9 +77,17 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerController(bool isAcceptInput)
     {
         if (isAcceptInput)
+        {
             inputActions.PlayingGame.Enable();
+            inputActions.UI.Disable();
+        }
+
         else
+        {
             inputActions.PlayingGame.Disable();
+            inputActions.UI.Enable();
+        }
+
     }
 
 }

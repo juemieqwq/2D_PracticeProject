@@ -86,7 +86,8 @@ public class PlayerInfo : MonoBehaviour, IPlayerInfo, IBuff
         }
         else if (health <= 0)
         {
-            playerClass.Dead();
+            if (!playerClass._isDead)
+                playerClass.Dead();
         }
     }
     public DamageTimeType GetDamageTimeType()

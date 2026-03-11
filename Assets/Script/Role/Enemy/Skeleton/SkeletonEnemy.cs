@@ -8,6 +8,8 @@ public class SkeletonEnemy : BaseEnemy
     private float _rigidityCoolTime = 1f;
     //伤害冷却
     private float _hitCoolTime = .4f;
+    [SerializeField]
+    private PlayerDetection playerDetection;
     void Start()
     {
         Init_Base_Info();
@@ -18,7 +20,12 @@ public class SkeletonEnemy : BaseEnemy
     void Update()
     {
         if (_isDead)
+        {
+            if (_stateMachineEnemy._currentState.GetType() != typeof(SkeletonDeadState))
+                _stateMachineEnemy.ChangeState<SkeletonDeadState>((int)StateBaseEnemy.EnemyState.Dead);
             return;
+        }
+
         CheckCollsion();
         //Debug.Log("_isOnGround：" + _isOnGround);
         //Debug.Log("_frontIsCrashWall：" + _frontIsCrashWall);
@@ -29,12 +36,12 @@ public class SkeletonEnemy : BaseEnemy
             _CurrentState.Update();
         TimeController();
         ChangeState();
-        if (!_isOnGround)
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, -2);
-        else if (_isOnGround && _rigidbody.velocity.y != 0)
-        {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
-        }
+        //if (!_isOnGround)
+        //    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, -2);
+        //else if (_isOnGround && _rigidbody.velocity.y != 0)
+        //{
+        //    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+        //}
         _rigidityCoolTime += Time.deltaTime;
         _hitCoolTime += Time.deltaTime;
     }
@@ -48,7 +55,7 @@ public class SkeletonEnemy : BaseEnemy
     //根据当前检测的状态来强行切换状态
     protected void ChangeState()
     {
-        if (_frontIsHavePlayer && _isChangeState && !(_CurrentState is SkeletonAlertState))
+        if (playerDetection.isHavePlayerEnter && _isChangeState && !(_CurrentState is SkeletonAlertState))
         {
             _stateMachineEnemy.ChangeState<SkeletonAlertState>((int)StateBaseEnemy.EnemyState.Alert);
         }
@@ -73,7 +80,6 @@ public class SkeletonEnemy : BaseEnemy
                 if (_rigidityCoolTime >= 1.2f && _hitCoolTime > .4f)
                 {
                     _stateMachineEnemy.ChangeState<SkeletonHitState>((int)StateBaseEnemy.EnemyState.Hit);
-                    StartRepelCoroutine();
                     _rigidityCoolTime = 0;
                     _hitCoolTime = 0f;
                 }
@@ -121,7 +127,9 @@ public class SkeletonEnemy : BaseEnemy
 
     public void StartRepelCoroutine(float ContinueTime = .2f)
     {
-        StartCoroutine(Repel(ContinueTime));
+        _rigidbody.AddForce(new Vector2(.5f * PlayerManager.instance.player.direction, .5f) * 15, ForceMode2D.Impulse);
+        //StartCoroutine(Repel(ContinueTime));
+
     }
 
 
@@ -137,7 +145,6 @@ public class SkeletonEnemy : BaseEnemy
         while (time < ContinueTime)
         {
             distance = Vector2.Lerp(originPosition, targetPosition, time / ContinueTime);
-            //还得是射线检测艹了都- -
             isHaveWall = Physics2D.Raycast(_rigidbody.position, distance.normalized, distance.magnitude, LayerMask.GetMask("Ground"));
             time += Time.deltaTime;
             if (!isHaveWall)
