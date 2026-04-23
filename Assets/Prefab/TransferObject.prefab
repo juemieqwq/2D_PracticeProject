@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   host: {fileID: 0}
-  continueTime: 1.5
+  continueTime: 3
   isTransferPlayer: 0
   isActive: 0
   target: {fileID: 0}

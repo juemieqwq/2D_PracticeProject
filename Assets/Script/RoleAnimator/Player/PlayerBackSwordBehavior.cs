@@ -7,7 +7,7 @@ public class PlayerBackSwordBehavior : PlayerBaseState
 {
 
     SwordObject sword;
-    RaycastHit2D hit;
+    RaycastHit2D[] hits;
     public override void Enter()
     {
         base.PlayerInit();
@@ -41,13 +41,18 @@ public class PlayerBackSwordBehavior : PlayerBaseState
         if (controller.mouse0.isPressed)
         {
 
-            hit = Physics2D.Raycast(player.transform.position, PlayerManager.instance.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).GetThrowSwordDirection(), 15f, LayerMask.GetMask("Skill"));
-            if (hit.collider != null)
-            {
-                sword = hit.rigidbody.GetComponent<SwordObject>();
-                Debug.Log("≥¢ ‘ªÒ»°∑…Ω£¿‡");
-            }
+            hits = Physics2D.CircleCastAll(player.transform.position, 1, PlayerManager.instance.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).GetThrowSwordDirection(), 12f, LayerMask.GetMask("Skill"));
+            //hit = Physics2D.Raycast(player.transform.position, PlayerManager.instance.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).GetThrowSwordDirection(), PlayerManager.instance.GetSkill<ThrowSwordSkill>((int)PlayerManager.SkillName.ThrowSwordSkill).GetThrowSwordDirection(), 15f, LayerMask.GetMask("Skill"));
 
+            foreach (var hit in hits)
+            {
+                if (hit.transform.tag == "Sword")
+                {
+                    sword = hit.rigidbody.GetComponent<SwordObject>();
+                    Debug.Log("≥¢ ‘ªÒ»°∑…Ω£¿‡");
+                    break;
+                }
+            }
             if (sword == null)
                 Debug.Log("Œ¥ºÏ≤‚µΩ");
             sword?.BackPlayer(player);

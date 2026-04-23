@@ -38,4 +38,9 @@ public class SettingPanel : BasePanel
     {
         setMasterVolumeSO.Raise(slider.value * 100 - 80);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

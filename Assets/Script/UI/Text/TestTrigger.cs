@@ -53,7 +53,7 @@ public class TestTrigger : MonoBehaviour
     {
         if (collision.tag == "Player" && !isEnterTrigger)
         {
-
+            triggerText.color = textColor;
         }
     }
 

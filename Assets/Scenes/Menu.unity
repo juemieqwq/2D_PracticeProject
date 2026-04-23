@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u9000\u51FA\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
-  m_sharedMaterial: {fileID: 5321765502637559507, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
+  m_sharedMaterial: {fileID: 6077966339880653935, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -798,8 +798,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u65B0\u7684\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
-  m_sharedMaterial: {fileID: 5321765502637559507, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
+  m_sharedMaterial: {fileID: 6077966339880653935, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -929,18 +929,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 7827c66b3555678468a3a1e2fe42264d, type: 2}
-        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &804607413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,8 +989,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7EE7\u7EED\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
-  m_sharedMaterial: {fileID: 5321765502637559507, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
+  m_sharedMaterial: {fileID: 6077966339880653935, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1357,8 +1345,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "2D\u8BAD\u7EC3"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
-  m_sharedMaterial: {fileID: 5321765502637559507, guid: 62fbea5fff2b7bb458cfdd7016b3ed67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
+  m_sharedMaterial: {fileID: 6077966339880653935, guid: d3365ce1691ec3742a85bc4b4137be7a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

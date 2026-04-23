@@ -97,7 +97,7 @@ public class SceneLoadManager : MonoBehaviour, ISaveableGameObject
     public void LoadNewGame()
     {
         Debug.LogError("½ÇÉ«ËÀÍö´ÎÊı:" + player.deathNum);
-        if (player.deathNum == 1)
+        if (player.deathNum == 1 || currentSceneKey == "Forest")
         {
             LoadNewScene("Forest", new Vector3(-28, -15, 0));
         }

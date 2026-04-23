@@ -145,7 +145,6 @@ public class Player : BaseCharacter, ISaveableGameObject
         (this as ISaveableGameObject).RegisterSaveDate();
         //Ìí¼ÓÊÂ¼þ¼àÌý
         newGameEventSO.AddEventListener(ResetPlayer);
-        loadGameEventSO.AddEventListener(ResetPlayer);
     }
 
 
@@ -185,7 +184,6 @@ public class Player : BaseCharacter, ISaveableGameObject
     {
         (this as ISaveableGameObject).UnRegisterSaveDate();
         newGameEventSO.RemoveEventListener(ResetPlayer);
-        loadGameEventSO.RemoveEventListener(ResetPlayer);
     }
 
     private void CheckCollsion()
@@ -378,12 +376,8 @@ public class Player : BaseCharacter, ISaveableGameObject
 
     public void ResetPlayer()
     {
-        if (_isDead || _playerInfo.GetInfo(GetInfoType.Health) <= 0)
-        {
-
-            _playerInfo.SetHealth(_playerInfo.GetInfo(GetInfoType.MaxHealth));
-            _isDead = false;
-        }
+        _playerInfo.SetHealth(_playerInfo.GetInfo(GetInfoType.MaxHealth));
+        _isDead = false;
         stateMachine.ChangeState<PlayerIdleBehavior>("Idle1");
     }
 

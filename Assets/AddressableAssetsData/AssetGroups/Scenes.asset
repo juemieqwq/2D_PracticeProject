@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2a8feb797ff20a3459c24d082d3b306d
-    m_Address: EventSO/SetMasterVolumeSO
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cda990e2423bbf4892e6590ba056729
     m_Address: Mian
     m_ReadOnly: 0
@@ -64,11 +59,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd84c454328c1d446b02e24558970437
     m_Address: Forest
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fdd4e5b188ecf6f439efa1ba00700e13
-    m_Address: MianRadio
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
